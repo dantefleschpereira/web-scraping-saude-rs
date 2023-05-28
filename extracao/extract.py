@@ -19,6 +19,7 @@ def extrair_casos_confirmados(link, headers):
 if __name__ == "__main__":
 
     total, variacao = extrair_casos_confirmados(link, headers)
-
-    print(f'Casos confirmados: {total}')
+    print('\n-=-=-=-=-Painel Coronavírus RS-=-=-=-=-')
+    print(f'\nCasos confirmados: {total}')
     print(f'Aumento de {variacao} casos')
+    print('\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n')
