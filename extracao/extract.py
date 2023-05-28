@@ -6,7 +6,7 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"}
 
 
-def extrair_dados(link, headers):
+def extrair_casos_confirmados(link, headers):
     requisicao = requests.get(link, headers=headers)
     site = BeautifulSoup(requisicao.text, "html.parser")
     confirmados = site.find(
@@ -18,7 +18,7 @@ def extrair_dados(link, headers):
 
 if __name__ == "__main__":
 
-    total, variacao = extrair_dados(link, headers)
+    total, variacao = extrair_casos_confirmados(link, headers)
 
     print(f'Casos confirmados: {total}')
     print(f'Aumento de {variacao} casos')
