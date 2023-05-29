@@ -16,10 +16,22 @@ def extrair_casos_confirmados(link, headers):
     return total, variacao
 
 
+def extrair_incidencia(link, headers):
+    requisicao = requests.get(link, headers=headers)
+    site = BeautifulSoup(requisicao.text, "html.parser")
+    incidencia = site.find_all(
+        "div", class_="h5 mb-0 font-weight-bold text-gray-800")
+    total_incidencia = incidencia[1].get_text()
+    return total_incidencia
+
+
 if __name__ == "__main__":
 
-    total, variacao = extrair_casos_confirmados(link, headers)
+    total_confirmados, variacao_confirmados = extrair_casos_confirmados(
+        link, headers)
+    total_incidencia = extrair_incidencia(link, headers)
     print('\n-=-=-=-=-Painel Coronavírus RS-=-=-=-=-')
-    print(f'\nCasos confirmados: {total}')
-    print(f'Aumento de {variacao} casos')
+    print(f'\nCasos confirmados: {total_confirmados}')
+    print(f'Aumento de {variacao_confirmados} casos')
+    print(f'Incidência {total_incidencia}')
     print('\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n')
