@@ -34,11 +34,13 @@ def taxa_ocupacao_leitos(link, headers):
     hospitalizacoes = tx_ocupacao[1].get_text()
     return qtd_ocupacao, hospitalizacoes
 
+
 def hora_atualizacao(link, headers):
     requisicao = requests.get(link, headers=headers)
     site = BeautifulSoup(requisicao.text, "html.parser")
     data = site.find_all("small")
     return data
+
 
 if __name__ == "__main__":
 
