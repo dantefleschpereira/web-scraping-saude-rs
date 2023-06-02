@@ -25,13 +25,27 @@ def extrair_incidencia(link, headers):
     return total_incidencia
 
 
+def taxa_ocupacao_leitos(link, headers):
+    requisicao = requests.get(link, headers=headers)
+    site = BeautifulSoup(requisicao.text, "html.parser")
+    tx_ocupacao = site.find_all(
+        "div", class_='h5 mb-0 mr-3 font-weight-bold text-gray-800')
+    qtd_ocupacao = tx_ocupacao[0].get_text()
+    hospitalizacoes = tx_ocupacao[1].get_text()
+    return qtd_ocupacao, hospitalizacoes
+
+
 if __name__ == "__main__":
 
     total_confirmados, variacao_confirmados = extrair_casos_confirmados(
         link, headers)
     total_incidencia = extrair_incidencia(link, headers)
+    tx_ocupacao, hospitalizacoes = taxa_ocupacao_leitos(link, headers)
+
     print('\n-=-=-=-=-Painel Coronavírus RS-=-=-=-=-')
     print(f'\nCasos confirmados: {total_confirmados}')
     print(f'Aumento de {variacao_confirmados} casos')
     print(f'Incidência {total_incidencia}')
+    print(f'Taxa de ocupação de leitos: {tx_ocupacao}')
+    print(f'Hospitalizações: {hospitalizacoes}')
     print('\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n')
