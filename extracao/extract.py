@@ -34,6 +34,11 @@ def taxa_ocupacao_leitos(link, headers):
     hospitalizacoes = tx_ocupacao[1].get_text()
     return qtd_ocupacao, hospitalizacoes
 
+def hora_atualizacao(link, headers):
+    requisicao = requests.get(link, headers=headers)
+    site = BeautifulSoup(requisicao.text, "html.parser")
+    data = site.find_all("small")
+    return data
 
 if __name__ == "__main__":
 
@@ -41,6 +46,7 @@ if __name__ == "__main__":
         link, headers)
     total_incidencia = extrair_incidencia(link, headers)
     tx_ocupacao, hospitalizacoes = taxa_ocupacao_leitos(link, headers)
+    data = hora_atualizacao(link, headers)
 
     print('\n-=-=-=-=-Painel Coronavírus RS-=-=-=-=-')
     print(f'\nCasos confirmados: {total_confirmados}')
@@ -48,4 +54,5 @@ if __name__ == "__main__":
     print(f'Incidência {total_incidencia}')
     print(f'Taxa de ocupação de leitos: {tx_ocupacao}')
     print(f'Hospitalizações: {hospitalizacoes}')
+    print(f'\n{data[2].get_text()}')
     print('\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n')
